@@ -25,7 +25,7 @@ st.markdown("""
 
     /* ======== TÍTULO PRINCIPAL ======== */
     .main-title { 
-        font-size:40px !important; 
+        font-size:30px !important; 
         font-weight: bold; 
         color: #FFFFFF !important; 
         text-align: center; 
@@ -34,7 +34,7 @@ st.markdown("""
 
     /* ======== SUBTÍTULO ======== */
     .subtitle { 
-        font-size:18px !important; 
+        font-size:16px !important; 
         color: #FFFFFF !important; 
         text-align: center; 
         margin-bottom: 30px; 
@@ -44,7 +44,7 @@ st.markdown("""
 
     /* Cambiar tamaño de fuente del sidebar */
     [data-testid="stSidebar"] * {
-        font-size: 18px !important;     /* Ajusta el tamaño aquí */
+        font-size: 16px !important;     /* Ajusta el tamaño aquí */
         color: white !important;        /* Color del texto */
     }
 
