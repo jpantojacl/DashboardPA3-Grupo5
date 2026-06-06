@@ -31,7 +31,7 @@ st.markdown("""
     }
 
     .subtitle { 
-        font-size:18px !important; 
+        font-size:16px !important; 
         color: #FFFFFF !important; 
         text-align: center; 
         margin-bottom: 30px; 
