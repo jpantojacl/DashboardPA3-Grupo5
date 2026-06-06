@@ -44,7 +44,7 @@ st.markdown("""
 
     /* Cambiar tamaño de fuente del sidebar */
     [data-testid="stSidebar"] * {
-        font-size: 16px !important;     /* Ajusta el tamaño aquí */
+        font-size: 15px !important;     /* Ajusta el tamaño aquí */
         color: white !important;        /* Color del texto */
     }
 
