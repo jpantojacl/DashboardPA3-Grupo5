@@ -22,8 +22,20 @@ px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
 # ==========================================
 st.markdown("""
     <style>
-    .main-title { font-size:40px !important; font-weight: bold; color: #111827; text-align: center; margin-bottom: 10px; }
-    .subtitle { font-size:18px !important; color: #4B5563; text-align: center; margin-bottom: 30px; }
+    .main-title { 
+        font-size:40px !important; 
+        font-weight: bold; 
+        color: #FFFFFF !important; 
+        text-align: center; 
+        margin-bottom: 10px; 
+    }
+
+    .subtitle { 
+        font-size:18px !important; 
+        color: #FFFFFF !important; 
+        text-align: center; 
+        margin-bottom: 30px; 
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -67,10 +79,17 @@ if uploaded_file:
     st.sidebar.success("Dataset cargado con éxito")
 
 # ==========================================
-# TÍTULOS PRINCIPALES (ACTUALIZADOS)
+# TÍTULOS PRINCIPALES (COLOR BLANCO)
 # ==========================================
-st.markdown('<div class="main-title">⚽ Machine Learning y Búsqueda de Talento</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Lectura y análisis del archivo</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="main-title">⚽ Machine Learning y Búsqueda de Talento</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="subtitle">Lectura y análisis del archivo</div>',
+    unsafe_allow_html=True
+)
 
 # ==========================================
 # SI HAY DATA → MOSTRAR DASHBOARD
