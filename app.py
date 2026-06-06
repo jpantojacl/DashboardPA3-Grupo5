@@ -176,7 +176,7 @@ if df is not None:
         st.plotly_chart(apply_style(fig_years), use_container_width=True)
 
         # ============================
-        # 2. Top 5 Citados
+        # 2. Top 5 Citados (NO MODIFICAR)
         # ============================
         st.markdown("#### 🏆 Top 5 Artículos más Citados")
 
@@ -194,7 +194,7 @@ if df is not None:
         st.plotly_chart(apply_style(fig_top), use_container_width=True)
 
         # ============================
-        # 3. Distribución de Citaciones
+        # 3. Distribución de Citaciones (MEJORADO)
         # ============================
         st.markdown("#### 📊 Distribución de Citaciones")
 
@@ -207,27 +207,30 @@ if df is not None:
         fig_hist.update_traces(marker_color="#1E3A8A")
         st.plotly_chart(apply_style(fig_hist), use_container_width=True)
 
-        # ============================
-        # 4. Productividad por Revista
-        # ============================
-        st.markdown("#### 📰 Productividad por Revista (Top 10)")
+        # ==========================================
+        # NUEVA SECCIÓN: ARTÍCULOS POR RANGO
+        # ==========================================
+        st.markdown("### 📄 Artículos por Rango de Citaciones")
 
-        journal_counts = df_filtered["Source title"].value_counts().head(10)
+        bins = [0, 10, 20, 40, 60, 80, 100]
+        labels = ["0–10", "10–20", "20–40", "40–60", "60–80", "80–100"]
 
-        top_journals = pd.DataFrame({
-            "Revista": journal_counts.index,
-            "Artículos": journal_counts.values
-        })
-
-        fig_journals = px.bar(
-            top_journals,
-            x="Artículos",
-            y="Revista",
-            orientation="h",
-            title="Top 10 Revistas con Más Publicaciones"
+        df_filtered["cit_range"] = pd.cut(
+            df_filtered["Cited by"],
+            bins=bins,
+            labels=labels,
+            include_lowest=True
         )
-        fig_journals.update_traces(marker_color="#2563EB")
-        st.plotly_chart(apply_style(fig_journals), use_container_width=True)
+
+        for label in labels:
+            subset = df_filtered[df_filtered["cit_range"] == label]
+
+            if len(subset) > 0:
+                st.markdown(f"#### Rango {label} citaciones ({len(subset)} artículos)")
+                st.dataframe(
+                    subset[["Title", "Cited by", "Year", "Source title"]],
+                    use_container_width=True
+                )
 
     # ==========================================
     # TAB 3 — ANÁLISIS DE TEXTO
