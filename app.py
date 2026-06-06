@@ -51,7 +51,6 @@ with st.sidebar:
         "optimiza la precisión del scouting para la identificación de talento "
         "emergente en el fútbol profesional?"
     )
-
     st.markdown("**Keywords Autorizadas (Scopus):**")
     st.code(
         '1. "Machine learning"\n'
@@ -59,7 +58,6 @@ with st.sidebar:
         '3. "Talent identification"\n'
         '4. "Soccer"'
     )
-
     st.markdown("---")
     st.subheader("📥 Carga de Datos")
     uploaded_file = st.file_uploader("Sube el archivo CSV exportado de Scopus", type=["csv"])
