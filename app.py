@@ -23,7 +23,7 @@ px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
 st.markdown("""
     <style>
     .main-title { 
-        font-size:40px !important; 
+        font-size:30px !important; 
         font-weight: bold; 
         color: #FFFFFF !important; 
         text-align: center; 
