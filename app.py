@@ -60,6 +60,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+/* Reducir espacio vertical en el sidebar */
+[data-testid="stSidebar"] .element-container {
+    margin-bottom: 5px !important;   /* Ajusta el valor */
+}
+
 
 # ==========================================
 # SIDEBAR
