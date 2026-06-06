@@ -91,6 +91,9 @@ with st.sidebar:
         '3. "Talent identification"\n'
         '4. "Soccer"'
     )
+    # Opción 2: reducir espacio entre Keywords y Carga de Datos
+    st.markdown("<div class='reduce-space'></div>", unsafe_allow_html=True)
+
     st.markdown("---")
     st.subheader("📥 Carga de Datos")
     uploaded_file = st.file_uploader("Sube el archivo CSV", type=["csv"])
