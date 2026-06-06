@@ -62,6 +62,12 @@ st.markdown("""
         margin-bottom: 0px !important;   /* Ajusta este valor si quieres más o menos espacio */
     }
 
+
+    /* Reducir espacio SOLO entre Keywords y Carga de Datos */
+    .reduce-space {
+        margin-top: -20px !important;    /* Ajusta este valor: -10, -20, -30 */
+    }
+
     </style>
 """, unsafe_allow_html=True)
 
