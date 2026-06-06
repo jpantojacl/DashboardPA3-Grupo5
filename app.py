@@ -181,16 +181,16 @@ if df is not None:
         st.plotly_chart(fig_box, use_container_width=True)
 
         # ============================
-        # 4. Productividad por Revista
+        # 4. Productividad por Revista (CORREGIDO)
         # ============================
         st.markdown("#### 📰 Productividad por Revista (Top 10)")
 
         top_journals = (
             df_filtered["Source title"]
             .value_counts()
-            .head(10)
             .reset_index()
             .rename(columns={"index": "Revista", "Source title": "Artículos"})
+            .head(10)
         )
 
         fig_journals = px.bar(
