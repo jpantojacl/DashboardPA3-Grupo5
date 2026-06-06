@@ -43,8 +43,6 @@ st.markdown("""
 # SIDEBAR
 # ==========================================
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/5323/5323871.png", width=50)
-
     st.header("🔍 Información del Proyecto")
 
     st.markdown("**Pregunta de Investigación:**")
