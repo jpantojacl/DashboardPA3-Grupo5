@@ -22,22 +22,44 @@ px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
 # ==========================================
 st.markdown("""
     <style>
+
+    /* ======== TÍTULO PRINCIPAL ======== */
     .main-title { 
-        font-size:30px !important; 
+        font-size:40px !important; 
         font-weight: bold; 
         color: #FFFFFF !important; 
         text-align: center; 
         margin-bottom: 10px; 
     }
 
+    /* ======== SUBTÍTULO ======== */
     .subtitle { 
-        font-size:16px !important; 
+        font-size:18px !important; 
         color: #FFFFFF !important; 
         text-align: center; 
         margin-bottom: 30px; 
     }
+
+    /* ======== AJUSTES DEL SIDEBAR ======== */
+
+    /* Cambiar tamaño de fuente del sidebar */
+    [data-testid="stSidebar"] * {
+        font-size: 18px !important;     /* Ajusta el tamaño aquí */
+        color: white !important;        /* Color del texto */
+    }
+
+    /* Cambiar ancho del sidebar */
+    [data-testid="stSidebar"] {
+        width: 350px !important;        /* Ajusta el ancho aquí */
+    }
+
+    [data-testid="stSidebar"] > div:first-child {
+        width: 350px !important;        /* Necesario para que Streamlit lo respete */
+    }
+
     </style>
 """, unsafe_allow_html=True)
+
 
 # ==========================================
 # SIDEBAR
