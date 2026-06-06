@@ -54,7 +54,7 @@ st.markdown("""
     }
 
     [data-testid="stSidebar"] > div:first-child {
-        width: 350px !important;        /* Necesario para que Streamlit lo respete */
+        width: 400px !important;        /* Necesario para que Streamlit lo respete */
     }
 
     </style>
