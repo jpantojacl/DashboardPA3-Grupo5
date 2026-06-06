@@ -151,7 +151,8 @@ if df is not None:
             showlegend=False,
             height=450,
             paper_bgcolor="white",
-            plot_bgcolor="white"
+            plot_bgcolor="white",
+            font=dict(color="black")
         )
         st.plotly_chart(fig_years, use_container_width=True)
 
@@ -168,7 +169,7 @@ if df is not None:
             x="Cited by",
             y="Short Title",
             orientation="h",
-            labels={"Cited by": "Citaciones", "Short Title": "Título"},
+            labels={"Cited by": "Número de Citaciones", "Short Title": "Título del Artículo"},
             title="Top 5 Artículos más Citados",
             color="Cited by",
             color_continuous_scale="Viridis"
@@ -177,7 +178,8 @@ if df is not None:
             showlegend=False,
             height=450,
             paper_bgcolor="white",
-            plot_bgcolor="white"
+            plot_bgcolor="white",
+            font=dict(color="black")
         )
         st.plotly_chart(fig_top, use_container_width=True)
 
@@ -197,7 +199,8 @@ if df is not None:
         fig_hist.update_layout(
             height=450,
             paper_bgcolor="white",
-            plot_bgcolor="white"
+            plot_bgcolor="white",
+            font=dict(color="black")
         )
         st.plotly_chart(fig_hist, use_container_width=True)
 
@@ -205,17 +208,18 @@ if df is not None:
             df_filtered,
             y="Cited by",
             title="Caja y Bigotes de Citaciones (Outliers)",
-            color_discrete_sequence=["#4B5563"]
+            color_discrete_sequence=["#1E3A8A"]
         )
         fig_box.update_layout(
             height=300,
             paper_bgcolor="white",
-            plot_bgcolor="white"
+            plot_bgcolor="white",
+            font=dict(color="black")
         )
         st.plotly_chart(fig_box, use_container_width=True)
 
         # ============================
-        # 4. Productividad por Revista (FIX DEFINITIVO)
+        # 4. Productividad por Revista
         # ============================
         st.markdown("#### 📰 Productividad por Revista (Top 10)")
 
@@ -239,7 +243,8 @@ if df is not None:
             showlegend=False,
             height=500,
             paper_bgcolor="white",
-            plot_bgcolor="white"
+            plot_bgcolor="white",
+            font=dict(color="black")
         )
         st.plotly_chart(fig_journals, use_container_width=True)
 
@@ -269,11 +274,14 @@ if df is not None:
                 words_df.sort_values("Frecuencia"),
                 x="Frecuencia",
                 y="Palabra",
-                title="Palabras Más Frecuentes en Abstracts"
+                title="Palabras Más Frecuentes en Abstracts",
+                color="Frecuencia",
+                color_continuous_scale="Blues"
             )
             fig3.update_layout(
                 paper_bgcolor="white",
-                plot_bgcolor="white"
+                plot_bgcolor="white",
+                font=dict(color="black")
             )
             st.plotly_chart(fig3, use_container_width=True)
         else:
