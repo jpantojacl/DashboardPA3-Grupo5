@@ -44,17 +44,17 @@ st.markdown("""
 
     /* Cambiar tamaño de fuente del sidebar */
     [data-testid="stSidebar"] * {
-        font-size: 15px !important;     /* Ajusta el tamaño aquí */
-        color: white !important;        /* Color del texto */
+        font-size: 15px !important;     /
+        color: white !important;        /
     }
 
     /* Cambiar ancho del sidebar */
     [data-testid="stSidebar"] {
-        width: 400px !important;        /* Ajusta el ancho aquí */
+        width: 400px !important;        /
     }
 
     [data-testid="stSidebar"] > div:first-child {
-        width: 400px !important;        /* Necesario para que Streamlit lo respete */
+        width: 400px !important;        /
     }
 
     </style>
