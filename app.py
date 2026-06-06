@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import re
 import collections
 
@@ -21,7 +20,6 @@ st.markdown("""
     <style>
     .main-title { font-size:40px !important; font-weight: bold; color: #1E3A8A; text-align: center; margin-bottom: 10px; }
     .subtitle { font-size:18px !important; color: #4B5563; text-align: center; margin-bottom: 30px; }
-    .card { background-color: #F3F4F6; padding: 20px; border-radius: 10px; margin-bottom: 15px; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -62,12 +60,14 @@ if df is not None:
     # ==========================================
     # VALIDACIÓN DE COLUMNAS
     # ==========================================
-    required_cols = ["Authors", "Title", "Year", "Source title", "Cited by", "Abstract"]
+    required_cols = ["Authors", "Title", "Year", "Abstract", "Cited by", "Source title"]
     missing = [c for c in required_cols if c not in df.columns]
 
     if missing:
-        st.error(f"El archivo no contiene las columnas necesarias: {missing}")
+        st.error(f"❌ El archivo no contiene las columnas necesarias: {missing}")
         st.stop()
+    else:
+        st.success("✅ El dataset contiene todos los metadatos esenciales requeridos por Scopus.")
 
     # ==========================================
     # FILTROS GLOBALES
@@ -117,33 +117,93 @@ if df is not None:
     with tab2:
         st.subheader("📊 Visualizaciones Interactivas")
 
-        col_g1, col_g2 = st.columns(2)
+        # ============================
+        # 1. Publicaciones por Año
+        # ============================
+        st.markdown("#### 📈 Publicaciones por Año")
+        year_counts = df_filtered["Year"].value_counts().sort_index()
 
-        # --- Publicaciones por Año ---
-        with col_g1:
-            st.markdown("#### 📈 Publicaciones por Año")
-            year_counts = df_filtered["Year"].value_counts().sort_index()
-            fig = px.bar(
-                x=year_counts.index,
-                y=year_counts.values,
-                labels={"x": "Año", "y": "Cantidad"},
-                title="Tendencia de Publicaciones"
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        fig_years = px.bar(
+            x=year_counts.index,
+            y=year_counts.values,
+            labels={"x": "Año", "y": "Cantidad de Artículos"},
+            title="Publicaciones por Año",
+            color=year_counts.values,
+            color_continuous_scale="Blues"
+        )
+        fig_years.update_layout(showlegend=False, height=450)
+        st.plotly_chart(fig_years, use_container_width=True)
 
-        # --- Top 5 Citados ---
-        with col_g2:
-            st.markdown("#### 🏆 Top 5 Artículos más Citados")
-            top5 = df_filtered.sort_values("Cited by", ascending=False).head(5)
-            fig2 = px.bar(
-                top5,
-                x="Cited by",
-                y="Title",
-                orientation="h",
-                title="Artículos con Mayor Impacto",
-                labels={"Cited by": "Citaciones", "Title": "Título"}
-            )
-            st.plotly_chart(fig2, use_container_width=True)
+        # ============================
+        # 2. Top 5 Artículos más Citados
+        # ============================
+        st.markdown("#### 🏆 Top 5 Artículos más Citados")
+
+        top5 = df_filtered.sort_values("Cited by", ascending=False).head(5).copy()
+        top5["Short Title"] = top5["Title"].apply(lambda x: x[:40] + "..." if len(x) > 40 else x)
+
+        fig_top = px.bar(
+            top5.sort_values("Cited by"),
+            x="Cited by",
+            y="Short Title",
+            orientation="h",
+            labels={"Cited by": "Citaciones", "Short Title": "Título"},
+            title="Top 5 Artículos más Citados",
+            color="Cited by",
+            color_continuous_scale="Viridis"
+        )
+        fig_top.update_layout(showlegend=False, height=450)
+        st.plotly_chart(fig_top, use_container_width=True)
+
+        # ============================
+        # 3. Distribución de Citaciones
+        # ============================
+        st.markdown("#### 📊 Distribución de Citaciones")
+
+        fig_hist = px.histogram(
+            df_filtered,
+            x="Cited by",
+            nbins=20,
+            title="Distribución de Citaciones",
+            labels={"Cited by": "Número de Citaciones"},
+            color_discrete_sequence=["#1E3A8A"]
+        )
+        fig_hist.update_layout(height=450)
+        st.plotly_chart(fig_hist, use_container_width=True)
+
+        fig_box = px.box(
+            df_filtered,
+            y="Cited by",
+            title="Caja y Bigotes de Citaciones (Outliers)",
+            color_discrete_sequence=["#4B5563"]
+        )
+        fig_box.update_layout(height=300)
+        st.plotly_chart(fig_box, use_container_width=True)
+
+        # ============================
+        # 4. Productividad por Revista
+        # ============================
+        st.markdown("#### 📰 Productividad por Revista (Top 10)")
+
+        top_journals = (
+            df_filtered["Source title"]
+            .value_counts()
+            .head(10)
+            .reset_index()
+            .rename(columns={"index": "Revista", "Source title": "Artículos"})
+        )
+
+        fig_journals = px.bar(
+            top_journals,
+            x="Artículos",
+            y="Revista",
+            orientation="h",
+            title="Top 10 Revistas con Más Publicaciones",
+            color="Artículos",
+            color_continuous_scale="Blues"
+        )
+        fig_journals.update_layout(showlegend=False, height=500)
+        st.plotly_chart(fig_journals, use_container_width=True)
 
     # ==========================================
     # TAB 3: ANÁLISIS DE TEXTO
