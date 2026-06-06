@@ -13,9 +13,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# Ajustes globales de estilo Plotly
+# Forzar estilo claro en Plotly
 px.defaults.template = "simple_white"
-px.defaults.color_discrete_sequence = ["#2563EB"]  # azul fuerte por defecto
+px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
 
 # ==========================================
 # ESTILOS
@@ -77,9 +77,6 @@ st.markdown('<div class="subtitle">Análisis del Estado del Arte de la Literatur
 # ==========================================
 if df is not None:
 
-    # ==========================================
-    # VALIDACIÓN DE COLUMNAS
-    # ==========================================
     required_cols = ["Authors", "Title", "Year", "Abstract", "Cited by", "Source title"]
     missing = [c for c in required_cols if c not in df.columns]
 
@@ -90,7 +87,7 @@ if df is not None:
         st.success("✅ El dataset contiene todos los metadatos esenciales requeridos por Scopus.")
 
     # ==========================================
-    # FILTROS GLOBALES
+    # FILTROS
     # ==========================================
     st.markdown("### 🎛️ Filtros Globales")
 
@@ -110,7 +107,7 @@ if df is not None:
     ]
 
     # ==========================================
-    # MÉTRICAS PRINCIPALES
+    # MÉTRICAS
     # ==========================================
     st.markdown("### 📊 Resumen General")
     col1, col2, col3, col4 = st.columns(4)
@@ -125,14 +122,14 @@ if df is not None:
     tab1, tab2, tab3 = st.tabs(["📋 Explorador", "📊 Gráficos", "🔤 Análisis de Texto"])
 
     # ==========================================
-    # TAB 1: EXPLORADOR
+    # TAB 1
     # ==========================================
     with tab1:
         st.subheader("📋 Explorador del Dataset")
         st.dataframe(df_filtered, use_container_width=True)
 
     # ==========================================
-    # TAB 2: GRÁFICOS INTERACTIVOS
+    # TAB 2 — GRÁFICOS
     # ==========================================
     with tab2:
         st.subheader("📊 Visualizaciones Interactivas")
@@ -149,21 +146,31 @@ if df is not None:
             labels={"x": "Año", "y": "Cantidad de Artículos"},
             title="Publicaciones por Año"
         )
-        fig_years.update_traces(marker_color="#2563EB")  # azul fuerte
+
+        fig_years.update_traces(marker_color="#1D4ED8")
+
         fig_years.update_layout(
-            showlegend=False,
-            height=450,
+            font=dict(color="#000000", size=16),
+            title_font=dict(color="#000000", size=22),
             paper_bgcolor="white",
             plot_bgcolor="white",
-            font=dict(color="#111827", size=14),
-            title=dict(font=dict(size=18)),
-            xaxis=dict(showgrid=False, linecolor="#9CA3AF"),
-            yaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF")
+            xaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000"
+            ),
+            yaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000",
+                gridcolor="#D1D5DB"
+            )
         )
+
         st.plotly_chart(fig_years, use_container_width=True)
 
         # ============================
-        # 2. Top 5 Artículos más Citados
+        # 2. Top 5 Citados
         # ============================
         st.markdown("#### 🏆 Top 5 Artículos más Citados")
 
@@ -175,20 +182,29 @@ if df is not None:
             x="Cited by",
             y="Short Title",
             orientation="h",
-            labels={"Cited by": "Número de Citaciones", "Short Title": "Título del Artículo"},
             title="Top 5 Artículos más Citados"
         )
-        fig_top.update_traces(marker_color="#1D4ED8")  # azul intenso
+
+        fig_top.update_traces(marker_color="#1E40AF")
+
         fig_top.update_layout(
-            showlegend=False,
-            height=450,
+            font=dict(color="#000000", size=16),
+            title_font=dict(color="#000000", size=22),
             paper_bgcolor="white",
             plot_bgcolor="white",
-            font=dict(color="#111827", size=14),
-            title=dict(font=dict(size=18)),
-            xaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF"),
-            yaxis=dict(showgrid=False, linecolor="#9CA3AF")
+            xaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000",
+                gridcolor="#D1D5DB"
+            ),
+            yaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000"
+            )
         )
+
         st.plotly_chart(fig_top, use_container_width=True)
 
         # ============================
@@ -200,37 +216,31 @@ if df is not None:
             df_filtered,
             x="Cited by",
             nbins=10,
-            title="Distribución de Citaciones",
-            labels={"Cited by": "Número de Citaciones"}
+            title="Distribución de Citaciones"
         )
-        fig_hist.update_traces(marker_color="#1E3A8A")
-        fig_hist.update_layout(
-            height=450,
-            paper_bgcolor="white",
-            plot_bgcolor="white",
-            font=dict(color="#111827", size=14),
-            title=dict(font=dict(size=18)),
-            xaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF"),
-            yaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF")
-        )
-        st.plotly_chart(fig_hist, use_container_width=True)
 
-        fig_box = px.box(
-            df_filtered,
-            y="Cited by",
-            title="Caja y Bigotes de Citaciones (Outliers)"
-        )
-        fig_box.update_traces(marker_color="#1E3A8A")
-        fig_box.update_layout(
-            height=300,
+        fig_hist.update_traces(marker_color="#1E3A8A")
+
+        fig_hist.update_layout(
+            font=dict(color="#000000", size=16),
+            title_font=dict(color="#000000", size=22),
             paper_bgcolor="white",
             plot_bgcolor="white",
-            font=dict(color="#111827", size=14),
-            title=dict(font=dict(size=18)),
-            xaxis=dict(showgrid=False, linecolor="#9CA3AF"),
-            yaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF")
+            xaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000",
+                gridcolor="#D1D5DB"
+            ),
+            yaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000",
+                gridcolor="#D1D5DB"
+            )
         )
-        st.plotly_chart(fig_box, use_container_width=True)
+
+        st.plotly_chart(fig_hist, use_container_width=True)
 
         # ============================
         # 4. Productividad por Revista
@@ -249,24 +259,33 @@ if df is not None:
             x="Artículos",
             y="Revista",
             orientation="h",
-            title="Top 10 Revistas con Más Publicaciones",
-            labels={"Artículos": "Cantidad de Artículos", "Revista": "Revista"}
+            title="Top 10 Revistas con Más Publicaciones"
         )
+
         fig_journals.update_traces(marker_color="#2563EB")
+
         fig_journals.update_layout(
-            showlegend=False,
-            height=500,
+            font=dict(color="#000000", size=16),
+            title_font=dict(color="#000000", size=22),
             paper_bgcolor="white",
             plot_bgcolor="white",
-            font=dict(color="#111827", size=14),
-            title=dict(font=dict(size=18)),
-            xaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF"),
-            yaxis=dict(showgrid=False, linecolor="#9CA3AF")
+            xaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000",
+                gridcolor="#D1D5DB"
+            ),
+            yaxis=dict(
+                tickfont=dict(color="#000000", size=14),
+                titlefont=dict(color="#000000", size=16),
+                linecolor="#000000"
+            )
         )
+
         st.plotly_chart(fig_journals, use_container_width=True)
 
     # ==========================================
-    # TAB 3: ANÁLISIS DE TEXTO
+    # TAB 3 — ANÁLISIS DE TEXTO
     # ==========================================
     with tab3:
         st.subheader("🔤 Frecuencia de Palabras en Abstracts")
@@ -287,23 +306,36 @@ if df is not None:
 
         if word_counts:
             words_df = pd.DataFrame(word_counts, columns=["Palabra", "Frecuencia"])
+
             fig3 = px.bar(
                 words_df.sort_values("Frecuencia"),
                 x="Frecuencia",
                 y="Palabra",
-                title="Palabras Más Frecuentes en Abstracts",
-                labels={"Frecuencia": "Frecuencia", "Palabra": "Palabra"}
+                title="Palabras Más Frecuentes en Abstracts"
             )
-            fig3.update_traces(marker_color="#F97316")  # naranja fuerte para diferenciar
+
+            fig3.update_traces(marker_color="#F97316")
+
             fig3.update_layout(
+                font=dict(color="#000000", size=16),
+                title_font=dict(color="#000000", size=22),
                 paper_bgcolor="white",
                 plot_bgcolor="white",
-                font=dict(color="#111827", size=14),
-                title=dict(font=dict(size=18)),
-                xaxis=dict(showgrid=True, gridcolor="#E5E7EB", linecolor="#9CA3AF"),
-                yaxis=dict(showgrid=False, linecolor="#9CA3AF")
+                xaxis=dict(
+                    tickfont=dict(color="#000000", size=14),
+                    titlefont=dict(color="#000000", size=16),
+                    linecolor="#000000",
+                    gridcolor="#D1D5DB"
+                ),
+                yaxis=dict(
+                    tickfont=dict(color="#000000", size=14),
+                    titlefont=dict(color="#000000", size=16),
+                    linecolor="#000000"
+                )
             )
+
             st.plotly_chart(fig3, use_container_width=True)
+
         else:
             st.info("No se encontraron suficientes palabras para el análisis.")
 
