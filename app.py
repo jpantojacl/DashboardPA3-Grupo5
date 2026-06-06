@@ -24,13 +24,29 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# SIDEBAR
+# SIDEBAR (ACTUALIZADO)
 # ==========================================
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/5323/5323871.png", width=100)
-    st.header("🔍 Información del Proyecto")
-    st.info("¿Cómo optimiza el ML el scouting de talento emergente en el fútbol profesional?")
 
+    st.header("🔍 Información del Proyecto")
+
+    st.markdown("**Pregunta de Investigación:**")
+    st.info(
+        "¿De qué manera el uso de algoritmos supervisados de machine learning "
+        "optimiza la precisión del scouting para la identificación de talento "
+        "emergente en el fútbol profesional?"
+    )
+
+    st.markdown("**Keywords Autorizadas (Scopus):**")
+    st.code(
+        '1. "Machine learning"\n'
+        '2. "Scouting"\n'
+        '3. "Talent identification"\n'
+        '4. "Soccer"'
+    )
+
+    st.markdown("---")
     st.subheader("📥 Carga de Datos")
     uploaded_file = st.file_uploader("Sube el archivo CSV exportado de Scopus", type=["csv"])
 
@@ -131,7 +147,12 @@ if df is not None:
             color=year_counts.values,
             color_continuous_scale="Blues"
         )
-        fig_years.update_layout(showlegend=False, height=450)
+        fig_years.update_layout(
+            showlegend=False,
+            height=450,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
         st.plotly_chart(fig_years, use_container_width=True)
 
         # ============================
@@ -152,7 +173,12 @@ if df is not None:
             color="Cited by",
             color_continuous_scale="Viridis"
         )
-        fig_top.update_layout(showlegend=False, height=450)
+        fig_top.update_layout(
+            showlegend=False,
+            height=450,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
         st.plotly_chart(fig_top, use_container_width=True)
 
         # ============================
@@ -168,7 +194,11 @@ if df is not None:
             labels={"Cited by": "Número de Citaciones"},
             color_discrete_sequence=["#1E3A8A"]
         )
-        fig_hist.update_layout(height=450)
+        fig_hist.update_layout(
+            height=450,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
         st.plotly_chart(fig_hist, use_container_width=True)
 
         fig_box = px.box(
@@ -177,7 +207,11 @@ if df is not None:
             title="Caja y Bigotes de Citaciones (Outliers)",
             color_discrete_sequence=["#4B5563"]
         )
-        fig_box.update_layout(height=300)
+        fig_box.update_layout(
+            height=300,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
         st.plotly_chart(fig_box, use_container_width=True)
 
         # ============================
@@ -201,7 +235,12 @@ if df is not None:
             color="Artículos",
             color_continuous_scale="Blues"
         )
-        fig_journals.update_layout(showlegend=False, height=500)
+        fig_journals.update_layout(
+            showlegend=False,
+            height=500,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
         st.plotly_chart(fig_journals, use_container_width=True)
 
     # ==========================================
@@ -231,6 +270,10 @@ if df is not None:
                 x="Frecuencia",
                 y="Palabra",
                 title="Palabras Más Frecuentes en Abstracts"
+            )
+            fig3.update_layout(
+                paper_bgcolor="white",
+                plot_bgcolor="white"
             )
             st.plotly_chart(fig3, use_container_width=True)
         else:
