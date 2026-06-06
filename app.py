@@ -22,8 +22,20 @@ px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
 # ==========================================
 st.markdown("""
     <style>
-    .main-title { font-size:40px !important; font-weight: bold; color: #111827; text-align: center; margin-bottom: 10px; }
-    .subtitle { font-size:18px !important; color: #4B5563; text-align: center; margin-bottom: 30px; }
+    .main-title { 
+        font-size:40px !important; 
+        font-weight: bold; 
+        color: #FFFFFF !important; 
+        text-align: center; 
+        margin-bottom: 10px; 
+    }
+
+    .subtitle { 
+        font-size:18px !important; 
+        color: #FFFFFF !important; 
+        text-align: center; 
+        margin-bottom: 30px; 
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -67,10 +79,17 @@ if uploaded_file:
     st.sidebar.success("Dataset cargado con éxito")
 
 # ==========================================
-# TÍTULOS PRINCIPALES
+# TÍTULOS PRINCIPALES (ACTUALIZADOS)
 # ==========================================
-st.markdown('<div class="main-title">⚽ Machine Learning & Scouting de Fútbol</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Análisis del Estado del Arte de la Literatura Científica (Scopus)</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="main-title">⚽ Machine Learning y Búsqueda de Talento</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="subtitle">Lectura y análisis del archivo</div>',
+    unsafe_allow_html=True
+)
 
 # ==========================================
 # SI HAY DATA → MOSTRAR DASHBOARD
@@ -133,23 +152,23 @@ if df is not None:
     # ==========================================
     def apply_style(fig):
         fig.update_layout(
-            font=dict(color="#000000", size=16),
-            title_font=dict(color="#000000", size=22),
+            font=dict(color="#FFFFFF", size=16),
+            title_font=dict(color="#FFFFFF", size=22),
             paper_bgcolor="white",
             plot_bgcolor="white",
 
             xaxis=dict(
-                tickfont=dict(color="#000000", size=14),
-                title=dict(font=dict(color="#000000", size=16)),
-                linecolor="#000000",
-                gridcolor="#D1D5DB"
+                tickfont=dict(color="#FFFFFF", size=14),
+                title=dict(font=dict(color="#FFFFFF", size=16)),
+                linecolor="#FFFFFF",
+                gridcolor="#9CA3AF"
             ),
 
             yaxis=dict(
-                tickfont=dict(color="#000000", size=14),
-                title=dict(font=dict(color="#000000", size=16)),
-                linecolor="#000000",
-                gridcolor="#D1D5DB"
+                tickfont=dict(color="#FFFFFF", size=14),
+                title=dict(font=dict(color="#FFFFFF", size=16)),
+                linecolor="#FFFFFF",
+                gridcolor="#9CA3AF"
             )
         )
         return fig
