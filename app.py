@@ -50,7 +50,7 @@ st.markdown("""
 
     /* Cambiar ancho del sidebar */
     [data-testid="stSidebar"] {
-        width: 350px !important;        /* Ajusta el ancho aquí */
+        width: 400px !important;        /* Ajusta el ancho aquí */
     }
 
     [data-testid="stSidebar"] > div:first-child {
