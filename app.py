@@ -87,7 +87,7 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="subtitle">Lectura y análisis del archivo</div>',
+    '<div class="subtitle">Lectura y Análisis del archivo</div>',
     unsafe_allow_html=True
 )
 
