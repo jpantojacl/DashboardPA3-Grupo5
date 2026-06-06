@@ -59,7 +59,7 @@ st.markdown("""
 
     /* Reducir espacio vertical entre elementos del sidebar */
     [data-testid="stSidebar"] .element-container {
-        margin-bottom: 2px !important;   /* Ajusta este valor si quieres más o menos espacio */
+        margin-bottom: 0px !important;   /* Ajusta este valor si quieres más o menos espacio */
     }
 
     </style>
