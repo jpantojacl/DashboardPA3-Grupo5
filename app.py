@@ -59,13 +59,13 @@ st.markdown("""
 
     /* Reducir espacio vertical entre elementos del sidebar */
     [data-testid="stSidebar"] .element-container {
-        margin-bottom: 0px !important;   /* Ajusta este valor si quieres más o menos espacio */
+        margin-bottom: 0px !important;   /
     }
 
 
     /* Reducir espacio SOLO entre Keywords y Carga de Datos */
     .reduce-space {
-        margin-top: -30px !important;    /
+        margin-top: -50px !important;    /
     }
 
     </style>
