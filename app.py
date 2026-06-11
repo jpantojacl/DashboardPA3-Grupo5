@@ -243,7 +243,7 @@ if df is not None:
             x="Cantidad de citaciones",
             nbins=10,
             title="Distribución de Citaciones",
-            labels={"count": "Conteo", "Cantidad de citaciones": "Cantidad de citaciones"}
+            labels={"y": "Conteo", "Cantidad de citaciones": "Cantidad de citaciones"}
         )
         fig_hist.update_traces(marker_color="#1E3A8A")
         st.plotly_chart(apply_style(fig_hist), use_container_width=True)
