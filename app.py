@@ -15,7 +15,7 @@ st.set_page_config(
 
 # Forzar estilo claro en Plotly
 px.defaults.template = "simple_white"
-px.defaults.color_discrete_sequence = ["#1D4ED8"]  # azul fuerte
+px.defaults.color_discrete_sequence = ["#1D4ED8"]
 
 # ==========================================
 # ESTILOS
@@ -57,3 +57,11 @@ st.markdown("""
 
     </style>
 """, unsafe_allow_html=True)
+
+# ==========================================
+# SIGUE EL DASHBOARD AQUÍ 👇
+# ==========================================
+
+with st.sidebar:
+    st.header("🔍 Información del Proyecto")
+    ...
