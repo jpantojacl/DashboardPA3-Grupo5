@@ -223,13 +223,13 @@ if df is not None:
         # ============================
         st.markdown("#### 🏆 Top 5 Artículos más Citados")
 
-        top5 = df_filtered.sort_values("Cited by", ascending=False).head(5).copy()
-        top5["Short Title"] = top5["Title"].apply(lambda x: x[:50] + "..." if len(x) > 50 else x)
+        top5 = df_filtered.sort_values("Cantidad de citaciones", ascending=False).head(5).copy()
+        top5["Título"] = top5["Title"].apply(lambda x: x[:50] + "..." if len(x) > 50 else x)
 
         fig_top = px.bar(
-            top5.sort_values("Cited by"),
+            top5.sort_values("Cantidad de citaciones"),
             x="Cited by",
-            y="Short Title",
+            y="Título",
             orientation="h",
             title="Top 5 Artículos más Citados"
         )
