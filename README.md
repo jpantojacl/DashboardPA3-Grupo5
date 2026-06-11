@@ -1,4 +1,4 @@
-ANÁLISIS DE ARTÍCULOS EN BASE A NUESTRO PROYECTO
+FUENTES REVISADAS EN BASE A NUESTRO PROYECTO
 
 1. Quantifying football player value: a novel combined rating and ML ensemble approach for predicting top players
 Este artículo propone un modelo de clasificación para predecir si un talento se convertirá en un jugador top con casi un 84% de precisión. Sirve para demostrar con métricas reales cómo el machine learning supervisado hace que el scouting sea más objetivo, eficiente y predictivo frente a la evaluación tradicional basada solo en la intuición.
