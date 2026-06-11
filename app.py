@@ -242,9 +242,12 @@ if df is not None:
             df_filtered,
             x="Cantidad de citaciones",
             nbins=10,
-            title="Distribución de Citaciones",
-            labels={"y": "Conteo", "Cantidad de citaciones": "Cantidad de citaciones"}
+            title="Distribución de Citaciones"
         )
+
+        # 🔥 Corrección definitiva del eje Y
+        fig_hist.update_yaxes(title="Conteo")
+
         fig_hist.update_traces(marker_color="#1E3A8A")
         st.plotly_chart(apply_style(fig_hist), use_container_width=True)
 
