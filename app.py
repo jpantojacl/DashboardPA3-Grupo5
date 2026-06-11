@@ -245,9 +245,7 @@ if df is not None:
             title="Distribución de Citaciones"
         )
 
-        # 🔥 Corrección definitiva del eje Y
         fig_hist.update_yaxes(title="Conteo")
-
         fig_hist.update_traces(marker_color="#1E3A8A")
         st.plotly_chart(apply_style(fig_hist), use_container_width=True)
 
@@ -272,7 +270,11 @@ if df is not None:
             if len(subset) > 0:
                 st.markdown(f"#### Rango {label} citaciones ({len(subset)} artículos)")
                 st.dataframe(
-                    subset[["Title", "Cantidad de citaciones", "Year", "Source title"]],
+                    subset.rename(columns={
+                        "Title": "Título",
+                        "Year": "Año",
+                        "Source title": "Fuente"
+                    })[["Título", "Cantidad de citaciones", "Año", "Fuente"]],
                     use_container_width=True
                 )
 
