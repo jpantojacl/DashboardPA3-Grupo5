@@ -228,7 +228,7 @@ if df is not None:
 
         fig_top = px.bar(
             top5.sort_values("Cantidad de citaciones"),
-            x="Cited by",
+            x="Cantidad de citaciones",
             y="Título",
             orientation="h",
             title="Top 5 Artículos más Citados"
