@@ -42,24 +42,21 @@ st.markdown("""
 
     /* ======== AJUSTES DEL SIDEBAR ======== */
 
-    /* Cambiar tamaño de fuente del sidebar */
     [data-testid="stSidebar"] * {
-        font-size: 15px !important;     /
-        color: white !important;        /
+        font-size: 15px !important;
+        color: white !important;
     }
 
-    /* Cambiar ancho del sidebar */
     [data-testid="stSidebar"] {
-        width: 400px !important;        /
+        width: 400px !important;
     }
 
     [data-testid="stSidebar"] > div:first-child {
-        width: 400px !important;        /
+        width: 400px !important;
     }
 
-    /* Reducir espacio vertical entre elementos del sidebar */
     [data-testid="stSidebar"] .element-container {
-        margin-bottom: -10px !important;   /
+        margin-bottom: -10px !important;
     }
 
     </style>
@@ -100,10 +97,17 @@ def load_data(file):
 df = None
 if uploaded_file:
     df = load_data(uploaded_file)
+
+    # 🔥 CORRECCIÓN: renombrar columnas
+    df = df.rename(columns={
+        "Cited by": "Cantidad de citaciones",
+        "Short Title": "Título"
+    })
+
     st.sidebar.success("Dataset cargado con éxito")
 
 # ==========================================
-# TÍTULOS PRINCIPALES (COLOR BLANCO)
+# TÍTULOS PRINCIPALES
 # ==========================================
 st.markdown(
     '<div class="main-title">⚽ Machine Learning y Búsqueda de Talento</div>',
@@ -120,7 +124,7 @@ st.markdown(
 # ==========================================
 if df is not None:
 
-    required_cols = ["Authors", "Title", "Year", "Abstract", "Cited by", "Source title"]
+    required_cols = ["Authors", "Title", "Year", "Abstract", "Cantidad de citaciones", "Source title"]
     missing = [c for c in required_cols if c not in df.columns]
 
     if missing:
@@ -141,12 +145,12 @@ if df is not None:
         selected_years = st.multiselect("Filtrar por Año:", years, default=years)
 
     with col_f2:
-        min_cit, max_cit = int(df["Cited by"].min()), int(df["Cited by"].max())
+        min_cit, max_cit = int(df["Cantidad de citaciones"].min()), int(df["Cantidad de citaciones"].max())
         cit_range = st.slider("Rango de Citaciones:", min_cit, max_cit, (min_cit, max_cit))
 
     df_filtered = df[
         (df["Year"].isin(selected_years)) &
-        (df["Cited by"].between(cit_range[0], cit_range[1]))
+        (df["Cantidad de citaciones"].between(cit_range[0], cit_range[1]))
     ]
 
     # ==========================================
@@ -156,8 +160,8 @@ if df is not None:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Artículos", len(df_filtered))
     col2.metric("Años", f"{df_filtered['Year'].min()} - {df_filtered['Year'].max()}")
-    col3.metric("Citaciones Totales", int(df_filtered['Cited by'].sum()))
-    col4.metric("Máx Citaciones", int(df_filtered['Cited by'].max()))
+    col3.metric("Citaciones Totales", int(df_filtered['Cantidad de citaciones'].sum()))
+    col4.metric("Máx Citaciones", int(df_filtered['Cantidad de citaciones'].max()))
 
     # ==========================================
     # TABS
@@ -172,144 +176,8 @@ if df is not None:
         st.dataframe(df_filtered, use_container_width=True)
 
     # ==========================================
-    # FUNCIÓN PARA APLICAR ESTILO A TODOS LOS GRÁFICOS
+    # FUNCIÓN PARA APLICAR ESTILO
     # ==========================================
     def apply_style(fig):
         fig.update_layout(
-            font=dict(color="#000000", size=16),
-            title_font=dict(color="#000000", size=22),
-            paper_bgcolor="white",
-            plot_bgcolor="white",
-
-            xaxis=dict(
-                tickfont=dict(color="#000000", size=14),
-                title=dict(font=dict(color="#000000", size=16)),
-                linecolor="#000000",
-                gridcolor="#D1D5DB"
-            ),
-
-            yaxis=dict(
-                tickfont=dict(color="#000000", size=14),
-                title=dict(font=dict(color="#000000", size=16)),
-                linecolor="#000000",
-                gridcolor="#D1D5DB"
-            )
-        )
-        return fig
-
-    # ==========================================
-    # TAB 2 — GRÁFICOS
-    # ==========================================
-    with tab2:
-        st.subheader("📊 Visualizaciones Interactivas")
-
-        # ============================
-        # 1. Publicaciones por Año
-        # ============================
-        st.markdown("#### 📈 Publicaciones por Año")
-        year_counts = df_filtered["Year"].value_counts().sort_index()
-
-        fig_years = px.bar(
-            x=year_counts.index,
-            y=year_counts.values,
-            labels={"x": "Año", "y": "Cantidad de Artículos"},
-            title="Publicaciones por Año"
-        )
-        fig_years.update_traces(marker_color="#1D4ED8")
-        st.plotly_chart(apply_style(fig_years), use_container_width=True)
-
-        # ============================
-        # 2. Top 5 Citados (NO MODIFICAR)
-        # ============================
-        st.markdown("#### 🏆 Top 5 Artículos más Citados")
-
-        top5 = df_filtered.sort_values("Cantidad de citaciones", ascending=False).head(5).copy()
-        top5["Título"] = top5["Title"].apply(lambda x: x[:50] + "..." if len(x) > 50 else x)
-
-        fig_top = px.bar(
-            top5.sort_values("Cantidad de citaciones"),
-            x="Cantidad de citaciones",
-            y="Título",
-            orientation="h",
-            title="Top 5 Artículos más Citados"
-        )
-        fig_top.update_traces(marker_color="#1E40AF")
-        st.plotly_chart(apply_style(fig_top), use_container_width=True)
-
-        # ============================
-        # 3. Distribución de Citaciones (MEJORADO)
-        # ============================
-        st.markdown("#### 📊 Distribución de Citaciones")
-
-        fig_hist = px.histogram(
-            df_filtered,
-            x="Cited by",
-            nbins=10,
-            title="Distribución de Citaciones"
-        )
-        fig_hist.update_traces(marker_color="#1E3A8A")
-        st.plotly_chart(apply_style(fig_hist), use_container_width=True)
-
-        # ==========================================
-        # NUEVA SECCIÓN: ARTÍCULOS POR RANGO
-        # ==========================================
-        st.markdown("### 📄 Artículos por Rango de Citaciones")
-
-        bins = [0, 10, 20, 40, 60, 80, 100]
-        labels = ["0–10", "10–20", "20–40", "40–60", "60–80", "80–100"]
-
-        df_filtered["cit_range"] = pd.cut(
-            df_filtered["Cited by"],
-            bins=bins,
-            labels=labels,
-            include_lowest=True
-        )
-
-        for label in labels:
-            subset = df_filtered[df_filtered["cit_range"] == label]
-
-            if len(subset) > 0:
-                st.markdown(f"#### Rango {label} citaciones ({len(subset)} artículos)")
-                st.dataframe(
-                    subset[["Title", "Cited by", "Year", "Source title"]],
-                    use_container_width=True
-                )
-
-    # ==========================================
-    # TAB 3 — ANÁLISIS DE TEXTO
-    # ==========================================
-    with tab3:
-        st.subheader("🔤 Frecuencia de Palabras en Abstracts")
-
-        stopwords = set([
-            'the','a','in','of','and','to','is','for','with','on','by','at','an','this','that','from','as','are','it','we',
-            'player','players','football','soccer','scouting','talent','identification','machine','learning','data','using',
-            'used','analysis','team','sports','study','results','proposed','performance','our','based','was','were','their',
-            'how','which'
-        ])
-
-        words_list = []
-        for abstract in df_filtered["Abstract"].dropna():
-            words = re.findall(r'\b\w+\b', abstract.lower())
-            words_list.extend([w for w in words if w not in stopwords and len(w) > 2])
-
-        word_counts = collections.Counter(words_list).most_common(15)
-
-        if word_counts:
-            words_df = pd.DataFrame(word_counts, columns=["Palabra", "Frecuencia"])
-
-            fig3 = px.bar(
-                words_df.sort_values("Frecuencia"),
-                x="Frecuencia",
-                y="Palabra",
-                title="Palabras Más Frecuentes en Abstracts"
-            )
-
-            fig3.update_traces(marker_color="#F97316")
-            st.plotly_chart(apply_style(fig3), use_container_width=True)
-
-        else:
-            st.info("No se encontraron suficientes palabras para el análisis.")
-
-else:
-    st.info("💡 Sube un archivo CSV desde el menú lateral para comenzar.")
+            font=dict(color
