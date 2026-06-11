@@ -96,7 +96,9 @@ if uploaded_file:
     # 🔥 Renombrar columnas solicitadas
     df = df.rename(columns={
         "Cited by": "Cantidad de citaciones",
-        "Short Title": "Título"
+        "Short Title": "Título",
+        "Authors": "Autores",
+        "Author full names": "Nombres Completos de los Autores"
     })
 
     st.sidebar.success("Dataset cargado con éxito")
@@ -119,7 +121,7 @@ st.markdown(
 # ==========================================
 if df is not None:
 
-    required_cols = ["Authors", "Title", "Year", "Abstract", "Cantidad de citaciones", "Source title"]
+    required_cols = ["Autores", "Title", "Año", "Abstract", "Cantidad de citaciones", "Source title"]
     missing = [c for c in required_cols if c not in df.columns]
 
     if missing:
