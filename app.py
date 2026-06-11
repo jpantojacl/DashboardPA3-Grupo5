@@ -93,7 +93,7 @@ df = None
 if uploaded_file:
     df = load_data(uploaded_file)
 
-    # 🔥 Renombrar columnas solicitadas
+    # Renombrar columnas solicitadas
     df = df.rename(columns={
         "Cited by": "Cantidad de citaciones",
         "Short Title": "Título",
@@ -121,7 +121,7 @@ st.markdown(
 # ==========================================
 if df is not None:
 
-    required_cols = ["Autores", "Title", "Año", "Abstract", "Cantidad de citaciones", "Source title"]
+    required_cols = ["Autores", "Title", "Year", "Abstract", "Cantidad de citaciones", "Source title"]
     missing = [c for c in required_cols if c not in df.columns]
 
     if missing:
@@ -202,9 +202,7 @@ if df is not None:
     with tab2:
         st.subheader("📊 Visualizaciones Interactivas")
 
-        # ============================
         # 1. Publicaciones por Año
-        # ============================
         st.markdown("#### 📈 Publicaciones por Año")
         year_counts = df_filtered["Year"].value_counts().sort_index()
 
@@ -217,9 +215,7 @@ if df is not None:
         fig_years.update_traces(marker_color="#1D4ED8")
         st.plotly_chart(apply_style(fig_years), use_container_width=True)
 
-        # ============================
         # 2. Top 5 Citados
-        # ============================
         st.markdown("#### 🏆 Top 5 Artículos más Citados")
 
         top5 = df_filtered.sort_values("Cantidad de citaciones", ascending=False).head(5).copy()
@@ -235,9 +231,7 @@ if df is not None:
         fig_top.update_traces(marker_color="#1E40AF")
         st.plotly_chart(apply_style(fig_top), use_container_width=True)
 
-        # ============================
         # 3. Distribución de Citaciones
-        # ============================
         st.markdown("#### 📊 Distribución de Citaciones")
 
         fig_hist = px.histogram(
@@ -246,14 +240,11 @@ if df is not None:
             nbins=10,
             title="Distribución de Citaciones"
         )
-
         fig_hist.update_yaxes(title="Conteo")
         fig_hist.update_traces(marker_color="#1E3A8A")
         st.plotly_chart(apply_style(fig_hist), use_container_width=True)
 
-        # ==========================================
         # ARTÍCULOS POR RANGO
-        # ==========================================
         st.markdown("### 📄 Artículos por Rango de Citaciones")
 
         bins = [0, 10, 20, 40, 60, 80, 100]
